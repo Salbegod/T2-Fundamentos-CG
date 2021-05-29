@@ -56,7 +56,6 @@ static void idle(void)
     if(AccumDeltaT > 1.0/60)
     {
         AccumDeltaT = 0;
-        controle();
         glutPostRedisplay();
     }
 }
