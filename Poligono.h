@@ -15,7 +15,7 @@ using namespace std;
 
 #ifdef WIN32
 #include <windows.h>
-#include <glut.h>
+#include <GL/glut.h>
 #endif
 
 #ifdef __APPLE__
@@ -47,4 +47,4 @@ public:
     void LePoligono(const char *nome);
 };
 
-#endif 
+#endif

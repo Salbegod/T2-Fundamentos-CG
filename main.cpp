@@ -5,25 +5,36 @@
 #endif
 
 #include <stdlib.h>
+#include <fstream>.h>
 #include "Temporizador.h"
+#include "Poligono.h"
+#include "Ponto.h"
 
 Temporizador T;
 double AccumDeltaT=0;
+Ponto Min, Max;
+Poligono nave;
 
 static void init()
 {
     glClearColor( 0.25f, 0.25f, 0.75f, 1.0f );
     glutIgnoreKeyRepeat(0);
+    Min = Ponto (-20, -20);
+    Max = Ponto (20, 20);
+    nave.LePoligono("sprites\\nave3.txt");
 }
 
-static void reshape(int width, int height)
+static void reshape(int w, int h)
 {
+    // Reset the coordinate system before modifying
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     // Define a area a ser ocupada pela area OpenGL dentro da Janela
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, w, h);  // Janela de Exibicao
     // Define os limites logicos da area OpenGL dentro da Janela
-    glOrtho(-20,20,-20,20,0,1);
+
+    glOrtho(Min.x,Max.x, Min.y,Max.y, 0,1); //Janela de Selecao
+    //glOrtho(0,10, 0,10, 0,1);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -36,7 +47,7 @@ static void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-
+    nave.desenhaPoligono();
 
     glutSwapBuffers();
 }
