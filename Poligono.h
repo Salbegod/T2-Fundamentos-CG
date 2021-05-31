@@ -44,7 +44,7 @@ public:
     void imprime();
     void atualizaLimites();
     void obtemLimites(Ponto &Min, Ponto &Max);
-    void LePoligono(const char *nome);
+    void LePoligono(std::string nome);
 };
 
 #endif

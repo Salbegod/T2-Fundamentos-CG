@@ -73,7 +73,7 @@ void Poligono::obtemLimites(Ponto &Min, Ponto &Max)
 // **********************************************************************
 //
 // **********************************************************************
-void Poligono::LePoligono(const char *nome)
+void Poligono::LePoligono(std::string nome)
 {
     ifstream input;            // ofstream arq;
     input.open(nome, ios::in); //arq.open(nome, ios::out);

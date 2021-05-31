@@ -9,11 +9,15 @@
 #include "Temporizador.h"
 #include "Poligono.h"
 #include "Ponto.h"
+#include "Personagem.h"
 
 Temporizador T;
 double AccumDeltaT=0;
 Ponto Min, Max;
-Poligono nave;
+bool keys[256];
+Personagem jogador ("nave3","jogador", 0, -13, 0);
+Personagem predio ("predio2", "cenario", 10, -15, 0);
+Personagem chao ("chao", "cenario", 0, -15, 0);
 
 static void init()
 {
@@ -21,7 +25,13 @@ static void init()
     glutIgnoreKeyRepeat(0);
     Min = Ponto (-20, -20);
     Max = Ponto (20, 20);
-    nave.LePoligono("sprites\\nave3.txt");
+}
+
+static void desenhaAtores()
+{
+    jogador.desenha();
+    predio.desenha();
+    chao.desenha();
 }
 
 static void reshape(int w, int h)
@@ -47,15 +57,140 @@ static void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    nave.desenhaPoligono();
+    desenhaAtores();
 
     glutSwapBuffers();
 }
 
 
-static void keyboard(unsigned char key, int x, int y)
+void keyboard_down(unsigned char key, int x, int y)
 {
+    switch ( key )
+	{
 
+    case 'a':
+        keys[4] = true;
+        break;
+
+    case 'd':
+        keys[5] = true;
+        break;
+
+    default:
+        break;
+	}
+}
+
+void keyboard_up(unsigned char key, int x, int y)
+{
+    switch ( key )
+	{
+
+    case 'a':
+        keys[4] = false;
+        break;
+
+    case 'd':
+        keys[5] = false;
+        break;
+
+    default:
+        break;
+	}
+}
+
+void arrow_down ( int a_keys, int x, int y ) //Detecta quando uma SETA e pressionada (pra baixo)
+{
+	switch ( a_keys )
+	{
+
+    case GLUT_KEY_UP:           //UP
+        keys[0] = true;
+        break;
+
+    case GLUT_KEY_DOWN:         //DOWN
+        keys[1] = true;
+        break;
+
+    case GLUT_KEY_LEFT:         //LEFT
+        keys[2] = true;
+        break;
+
+    case GLUT_KEY_RIGHT:        //RIGHT
+        keys[3] = true;
+        break;
+
+    default:                //DEFAULT
+        break;
+	}
+}
+
+void arrow_up(int a_keys, int x, int y) //Detecta quando uma SETA e solta (pra cima)
+{
+    switch ( a_keys )
+	{
+
+    case GLUT_KEY_UP:           //UP
+        keys[0] = false;
+        break;
+
+    case GLUT_KEY_DOWN:         //DOWN
+        keys[1] = false;
+        break;
+
+    case GLUT_KEY_LEFT:         //LEFT
+        keys[2] = false;
+        break;
+
+    case GLUT_KEY_RIGHT:        //RIGHT
+        keys[3] = false;
+        break;
+
+    default:                //DEFAULT
+        break;
+	}
+}
+
+void controle() //Controla o movimento do personagem de acordo com os botoes pressionados (soma um valor nas pos. dele)
+{
+    if(keys[0]) // CIMA
+    {
+        jogador.Posicao.soma(0,0.5,0);
+    }
+    if(keys[1]) // BAIXO
+    {
+        jogador.Posicao.soma(0,-0.5,0);
+    }
+    if(keys[2]) // ESQUERDA
+    {
+        jogador.Posicao.soma(-0.5,0,0);
+    }
+    if(keys[3]) // DIREITA
+    {
+        jogador.Posicao.soma(0.5,0,0);
+    }
+    if(keys[4]) //ROTACIONA ESQUERDA
+    {
+        if(jogador.rotacao >= 80)
+        {
+
+        }
+        else
+        {
+            jogador.rotacao += 5;
+        }
+    }
+    if(keys[5]) //ROTACIONA DIREITA
+    {
+        if(jogador.rotacao <= -80)
+        {
+
+        }
+        else
+        {
+            jogador.rotacao += -5;
+        }
+    }
 }
 
 static void idle(void)
@@ -67,6 +202,7 @@ static void idle(void)
     if(AccumDeltaT > 1.0/60)
     {
         AccumDeltaT = 0;
+        controle();
         glutPostRedisplay();
     }
 }
@@ -85,7 +221,10 @@ int main(int argc, char *argv[])
     glutDisplayFunc( display );
     glutIdleFunc( idle );
     glutReshapeFunc( reshape );
-    glutKeyboardFunc( keyboard );
+    glutKeyboardFunc( keyboard_down );
+    glutKeyboardUpFunc( keyboard_up );
+    glutSpecialFunc( arrow_down );
+    glutSpecialUpFunc( arrow_up );
 
     glutMainLoop();
     return 0;

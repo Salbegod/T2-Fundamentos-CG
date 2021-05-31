@@ -6,13 +6,18 @@ using namespace std;
 #include "Poligono.h"
 
 class Personagem{
-    //Poligono *modelo;
+    Poligono sprite;
 
 public:
+    Personagem(std::string nome, std::string tipo, float posX, float posY, float posZ);
+    Personagem(std::string nome, std::string tipo);
     Ponto Posicao, Escala, Direcao, Velocidade;
     float rotacao;
-    int modelo;
+    std::string flag;
     void desenha();
+private:
+    float x, y, z;
+    void desenhaPersonagem();
 };
 
 

@@ -1,8 +1,8 @@
 #include "Personagem.h"
 
 
-void DesenhaPersonagem();
-void DesenhaRetangulo();
+//void DesenhaPersonagem();
+//void DesenhaRetangulo();
 // ***********************************************************
 //  void InstanciaPonto(Ponto3D *p, Ponto3D *out)
 //  Esta funcao calcula as coordenadas de um ponto no
@@ -10,6 +10,25 @@ void DesenhaRetangulo();
 //  aplica as rotacoes, escalas e translacoes a um
 //  ponto no sistema de referencia do objeto (SRO).
 // ***********************************************************
+
+Personagem::Personagem(std::string nome, std::string tipo, float posX, float posY, float posZ)
+{
+    sprite.LePoligono("sprites\\"+nome+".txt");
+    this->flag = tipo;
+    this->x = posX;
+    this->y = posY;
+    this->z = posZ;
+}
+
+Personagem::Personagem(std::string nome, std::string tipo)
+{
+    sprite.LePoligono("sprites\\"+nome+".txt");
+    this->flag = tipo;
+    this->x = 0;
+    this->y = 0;
+    this->z = 0;
+}
+
 void InstanciaPonto(Ponto &p, Ponto &out)
 {
     GLfloat ponto_novo[4];
@@ -43,13 +62,12 @@ void Personagem::desenha()
     // desenha a geometria do objeto
 
     glPushMatrix();
-    glTranslatef(Posicao.x, Posicao.y, 0);
+    glTranslatef(Posicao.x+x, Posicao.y+y, 0);
     glRotatef(rotacao, 0, 0, 1);
     Ponto PosicaoDoPersonagem;
-    Ponto Origem (0,0,0);
-    InstanciaPonto(Origem, PosicaoDoPersonagem);
+    Ponto Origem (x,y,z);
+    InstanciaPonto(PosicaoDoPersonagem, Origem);
     //PosicaoDoPersonagem.imprime(); cout << endl;
-
-    //DesenhaPersonagem();
+    sprite.desenhaPoligono();
     glPopMatrix();
 }
