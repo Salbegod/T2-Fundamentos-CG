@@ -18,6 +18,7 @@ Personagem::Personagem(std::string nome, std::string tipo, float posX, float pos
     this->x = posX;
     this->y = posY;
     this->z = posZ;
+    envelope = sprite.criaEnvelope();
 }
 
 Personagem::Personagem(std::string nome, std::string tipo)
@@ -27,6 +28,7 @@ Personagem::Personagem(std::string nome, std::string tipo)
     this->x = 0;
     this->y = 0;
     this->z = 0;
+    envelope = sprite.criaEnvelope();
 }
 
 void InstanciaPonto(Ponto &p, Ponto &out)
@@ -55,6 +57,7 @@ Ponto InstanciaPonto(Ponto P)
     InstanciaPonto(P, temp);
     return temp;
 }
+
 
 void Personagem::desenha()
 {

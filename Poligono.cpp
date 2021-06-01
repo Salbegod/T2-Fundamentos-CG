@@ -70,6 +70,38 @@ void Poligono::obtemLimites(Ponto &Min, Ponto &Max)
     }
 }
 
+Poligono Poligono :: criaEnvelope() {
+    Poligono envelope;
+    float xMaisDir = Vertices[0].x, xMaisEsq = Vertices[0].x, yMaisAcima = Vertices[0].y, yMaisAbaixo = Vertices[0].y;
+
+    for (int i = 0; i < Vertices.size(); i++)
+    {
+        Ponto Atual = Vertices[i];
+        if (Atual.x > xMaisDir)
+        {
+            xMaisDir = Atual.x;
+        }
+        if (Atual.x < xMaisEsq)
+        {
+            xMaisEsq = Atual.x;
+        }
+        if (Atual.y > yMaisAcima)
+        {
+            yMaisAcima = Atual.y;
+        }
+        if (Atual.y < yMaisAbaixo)
+        {
+            yMaisAbaixo = Atual.y;
+        }
+    }
+    envelope.insereVertice(Ponto(xMaisDir, yMaisAcima)); // ponto mais alto e mais para a direita
+    envelope.insereVertice(Ponto(xMaisDir, yMaisAbaixo)); // ponto mais baixo e mais para a direita
+    envelope.insereVertice(Ponto(xMaisEsq,yMaisAbaixo)); // ponto mais baixo e mais para esquerda
+    envelope.insereVertice(Ponto(xMaisEsq,yMaisAcima)); // ponto mais alto e mais para esquerda
+    return envelope;
+
+}
+
 // **********************************************************************
 //
 // **********************************************************************

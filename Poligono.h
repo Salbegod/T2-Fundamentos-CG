@@ -45,6 +45,7 @@ public:
     void atualizaLimites();
     void obtemLimites(Ponto &Min, Ponto &Max);
     void LePoligono(std::string nome);
+    Poligono criaEnvelope();
 };
 
 #endif

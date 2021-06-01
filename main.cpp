@@ -1,7 +1,10 @@
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
+
+
+#ifdef WIN32
+#include <windows.h>
 #include <GL/glut.h>
+#else
+#include <sys/time.h>
 #endif
 
 #include <stdlib.h>
@@ -32,6 +35,8 @@ static void desenhaAtores()
     jogador.desenha();
     predio.desenha();
     chao.desenha();
+
+
 }
 
 static void reshape(int w, int h)

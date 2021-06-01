@@ -9,6 +9,7 @@ class Personagem{
     Poligono sprite;
 
 public:
+    Poligono envelope;
     Personagem(std::string nome, std::string tipo, float posX, float posY, float posZ);
     Personagem(std::string nome, std::string tipo);
     Ponto Posicao, Escala, Direcao, Velocidade;
@@ -17,7 +18,6 @@ public:
     void desenha();
 private:
     float x, y, z;
-    void desenhaPersonagem();
 };
 
 

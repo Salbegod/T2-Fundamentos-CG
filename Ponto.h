@@ -29,6 +29,7 @@ Ponto ObtemMinimo (Ponto P1, Ponto P2);
 
 Ponto ObtemMaximo (Ponto P1, Ponto P2);
 
+
 Ponto operator+(Ponto P1, Ponto P2);
 Ponto operator- (Ponto P1, Ponto P2);
 Ponto operator* (Ponto P1, float k);
